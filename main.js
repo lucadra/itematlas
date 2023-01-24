@@ -19,8 +19,6 @@ d3.csv("data/catalogue.csv", (d) => d).then(function(data) {
                    .map((d) => [d[0], d[1].sort((a, b) => b.duration - a.duration).slice(0, 100), d[2]])
                    .sort((a, b) => d3.sum(b[1], (d) => d.duration) - d3.sum(a[1], (d) => d.duration))
                    .forEach((d) => {
-        
-        console.log(d)
 
         let group = root.append("div").attr("class", "group")
         
@@ -44,8 +42,13 @@ d3.csv("data/catalogue.csv", (d) => d).then(function(data) {
             /// === TOOLTIP === ///
             images
                 .on("mouseover", function(e) {
-                    console.log(e)
-                    console.log(d)
+                    let parent = d3.select(this.parentNode.parentNode.parentNode)
+                    console.log(parent.node().getBoundingClientRect())
+
+                    d3.select(this)
+                    .attr("height", `${parent.node().getBoundingClientRect().height}px`)
+
+
                     d3.select('body')
                         .append("div")
                         .attr("class", "tooltip")
@@ -55,6 +58,8 @@ d3.csv("data/catalogue.csv", (d) => d).then(function(data) {
                 })
                 .on("mouseout", function() {
                     d3.select('body').selectAll(".tooltip").remove()
+                    d3.select(this).attr("height", d.duration * 3)
+
                 })
         })
 

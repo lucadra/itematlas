@@ -7,6 +7,11 @@ html, body {
     margin: 0;
 }
 
+#header-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
 #showcase {
     display: flex;
