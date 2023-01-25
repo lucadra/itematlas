@@ -66,6 +66,7 @@ img {
 .group > .scrollBox > .images {
     border-radius: 16px;
     overflow-y: scroll;
+    cursor: grab; 
 }
 
 .group > .text > h2 {

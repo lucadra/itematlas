@@ -27,8 +27,27 @@ d3.csv("data/catalogue.csv", (d) => d).then(function(data) {
         let scrollBox = group.append("div").attr("class", "scrollBox")
         let collection = scrollBox.append("div").attr("class", "images")
 
+        //make each collection scroll on drag
+        collection.on("mousedown", function(e) {
+            collection.style("cursor", "grabbing")
+            e.preventDefault()
+            let startX = e.clientX
+            let scrollLeft = this.scrollLeft
+            let self = this
+
+            d3.select('body')
+                .on("mousemove", function(e) {
+                    self.scrollLeft = scrollLeft - (e.clientX - startX)
+                })
+                .on("mouseup", function() {
+                    d3.select('body').on("mousemove", null)
+                    collection.style("cursor", "default")
+                })
+            
+        })
+
+
         d[1].forEach((d, i) => {
-            // We take only the first 100 images to avoid turning our RAM into a toaster
             if (i > 100) return
             let container = collection
                                 .append("div")
@@ -55,7 +74,7 @@ d3.csv("data/catalogue.csv", (d) => d).then(function(data) {
                         .attr("class", "tooltip")
                         .style("top", (e.pageY - 10) + "px")
                         .style("left", (e.pageX + 10) + "px")
-                        .text(`Object appears for ${secondsToMinutes(Math.round(d.duration))}`)
+                        .text(`This ${d.object_name} is continuously visible for ${secondsToMinutes(Math.round(d.duration))}`)
                 })
                 .on("mouseout", function() {
                     d3.select('body').selectAll(".tooltip").remove()
