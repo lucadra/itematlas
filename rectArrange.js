@@ -1,3 +1,5 @@
+//The code in this file was written by Claudio Esperanca (cesperanca.org), my contribution is limited to adapting the existing code to my needs.
+
 let config = {heuristic: "best", metric: "euclidean", renderFreq: 10, closeFreq: 1, closeFactor: 0.2};
 
 function map2range (value, domain_min, domain_max, range_min, range_max) {
